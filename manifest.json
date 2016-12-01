@@ -16,7 +16,8 @@
   },
   "browser_action": {
     "default_icon": "W.png",
-    "default_title": "InOtherWords"
+    "default_title": "InOtherWords",
+    "default_popup": "popup.html"
   },
   "permissions": [
     "https://*/*",
