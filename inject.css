@@ -1,0 +1,12 @@
+.hidden {
+  display: none;
+}
+
+.strike-through {
+  text-decoration: line-through;
+}
+
+.emphasize {
+  color: red;
+  font-weight: bold;
+}

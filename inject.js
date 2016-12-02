@@ -29,6 +29,13 @@ function changeContent(originContent) {
 
 
 
+function resetContent(originContent, cb) {
+  sendMessageToBackground("inOriginalWords", originContent, function(response) {
+    var status = response.status;
+
+    if(status === SUCCESS) {
+      var newContent = response.newContent;
+      document.body.outerHTML = newContent;
       cb(SUCCESS);
     } else {
       cb(FAILURE);
