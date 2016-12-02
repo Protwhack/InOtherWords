@@ -6,7 +6,20 @@
 var SUCCESS = 200, FAILURE = 500;
 
 // TODO finish mapping data
-var mappingData = {};
+var mappingData = {
+  gender: {
+    neuter: {
+      "媽媽": "雙親"
+    },
+    antonym: {
+      "媽媽": "爸爸",
+      "爸爸": "媽媽"
+    }
+  }//,
+  // racist: {},
+};
+
+
 
 function changeContentToMappingData(originContent, cb) {
   // TODO change content to mapping data, then return status
