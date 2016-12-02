@@ -3,7 +3,7 @@
 //   action: ""
 //   data: xxx
 // }
-var SUCCESS = 200, FAILURE = 500;
+const SUCCESS = 200, FAILURE = 500;
 
 // TODO finish mapping data
 var mappingData = {
@@ -53,6 +53,8 @@ function resetContent(originContent, cb) {
 
   cb({status: SUCCESS, newContent: newContent});
 }
+
+
 
 function setMessageListener() {
   console.log("setMessageListener");

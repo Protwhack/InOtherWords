@@ -4,8 +4,12 @@
 //   data: xxx
 // }
 
-var SUCCESS = 200, FAILURE = 500;
+const SUCCESS = 200, FAILURE = 500;
+// const THEME_GENDER = 0;
+// const MODE_NEUTER = 0, MODE_ANTONYM = 1;
+
 var enable;
+// var themeSelected = , mode = ;
 
 
 
@@ -13,7 +17,9 @@ function getCurrentTabContent(cb) {
   return document.body.outerHTML;
 }
 
-function changeContent(originContent) {
+
+
+function changeContent(originContent, cb) {
   sendMessageToBackground("inOtherWords", originContent, function(response) {
     var status = response.status;
 
@@ -84,6 +90,8 @@ function setMessageListeners() {
     }
   });
 }
+
+
 
 (function init() {
   enable = false;

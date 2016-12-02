@@ -30,7 +30,7 @@
         "http://*/*"
       ],
       "js": [
-        "inject.js"
+        "utilities.js", "inject.js"
       ],
       "css": [
         "inject.css"

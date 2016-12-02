@@ -3,13 +3,11 @@
 //   data: xxx
 // }
 
-var switchElement;
-var SUCCESS = 200, FAILURE = 500;
+const SUCCESS = 200, FAILURE = 500;
 
-function isFunction(functionToCheck) {
-  var getType = {};
-  return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
-}
+var switchElement;
+
+
 
 function sendMessageToInject(action, data, callback) {
   console.log("sendMessageToInject");
@@ -28,6 +26,8 @@ function sendMessageToInject(action, data, callback) {
     chrome.tabs.sendMessage(tabs[0].id, message, callback);
   });
 }
+
+
 
 // switch on/off
 function clickSwitch() {
@@ -54,6 +54,8 @@ function clickSwitch() {
     }
   });
 }
+
+
 
 (function () {
   switchElement = document.getElementById("switch");
