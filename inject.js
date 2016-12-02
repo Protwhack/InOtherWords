@@ -29,7 +29,9 @@ function changeContent(originContent) {
   });
 }
 
-function sendMessageToBackground(message, data, callback) {
+
+
+function sendMessageToBackground(action, data, callback) {
   if(isFunction(data)) {
     callback = data;
     data = undefined;
