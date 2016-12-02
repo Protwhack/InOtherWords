@@ -65,24 +65,31 @@ function sendMessageToBackground(action, data, callback) {
   chrome.runtime.sendMessage(message, callback);
 }
 
+
+
 function setMessageListeners() {
   console.log("setMessageListeners");
   var action;
   chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
     action = message.action;
+
     switch(action) {
-      
+
       case "switchOn":
-        getCurrentTabContent(function() {
+        var originContent = getCurrentTabContent();
+        changeContent(originContent, function() {
           enable = true;
           sendResponse(SUCCESS);
         });
         return true;
       
       case "switchOff":
-        sendResponse(SUCCESS);
-        // TODO reload page
-        break;
+        var originContent = getCurrentTabContent();
+        resetContent(originContent, function() {
+          enable = false;
+          sendResponse(SUCCESS);
+        });
+        return true;
 
       case "isCurrentTabEnable":
         sendResponse(enable);
