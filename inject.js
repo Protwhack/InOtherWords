@@ -19,8 +19,15 @@ function changeContent(originContent) {
 
     if(status === SUCCESS) {
       var newContent = response.newContent;
+      document.body.outerHTML = newContent;
+      cb(SUCCESS);
+    } else {
+      cb(FAILURE);
+    }
+  });
+}
 
-      // TODO set content
+
 
       cb(SUCCESS);
     } else {
