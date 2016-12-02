@@ -7,10 +7,10 @@
 var SUCCESS = 200, FAILURE = 500;
 var enable;
 
-function getCurrentTabContent(cb) {
-  // TODO getCurrentTabContent
 
-  changeContent("");
+
+function getCurrentTabContent(cb) {
+  return document.body.outerHTML;
 }
 
 function changeContent(originContent) {
