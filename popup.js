@@ -37,6 +37,10 @@ function clickSwitch() {
   var action, valueToSet;
   var switchValue = switchElement.innerHTML;
 
+  if (cropper !== undefined) {
+    cropper.destroy();
+  }
+
   if(switchValue.indexOf("返回原文") != -1) {
     switchElement.innerHTML = "處理中...";
     action = "switchOff";
