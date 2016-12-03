@@ -1,7 +1,35 @@
+.light-gray {
+    background-color: #eee;
+}
+
+.red {
+    background-color: red;
+}
+
+.pink {
+    background-color: pink;
+}
+
 .wrap {
     height: auto;
     box-sizing: border-box;
-    padding: 5px;
+}
+
+.home, .list {
+    width: 200px;
+}
+
+.big {
+    width: 100%;
+}
+
+.medium {
+    width: 50%;
+}
+
+.small {
+    width: 30%;
+    display: inline-block;
 }
 
 .popup {
@@ -10,19 +38,106 @@
 }
 
 button {
-    border: 4px solid rgba(255, 255, 255, 1);
+    border: 0px solid rgba(255, 255, 255, 1);
     border-radius: 5px;
-    background: rgba(255, 255, 255, 1);
+    background: rgba(225, 225, 225, 1);
     display: inline-block;
     font-size: 1em;
     line-height: 100%;
-    margin: 0 5px;
     padding: 0.7em;
     text-decoration: none;
     opacity: 0.7;
+    margin-top: 0.5em;
+}
+
+button:hover {
+    background-color: rgba(200, 200, 200, 1);
+}
+
+button:active {
+    background-color: rgba(150, 150, 150, 1);
+}
+
+select {
+    width: 55%;
+}
+
+.setting {
+    display: block;
 }
 
 #switch {
-    width: 110px;
     height: auto;
 }
+
+.label {
+    width: 20%;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+.hide {
+    display: none;
+}
+
+.block {
+    height: auto;
+}
+
+.create-block {
+    border-bottom: 1px dashed #ececf4;
+}
+
+.block span {
+    width: 5%;
+}
+
+.create-item {
+    box-sizing: border-box;
+}
+
+.label-item {
+    display: block;
+}
+
+.label-item label {
+    text-align: center;
+}
+
+
+/* Checked Tabs */
+
+.tab{
+    display:none;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+
+.tabs-checked input:nth-of-type(2):not(:checked) ~ input:nth-of-type(3):not(:checked) ~ .tab:nth-of-type(1),
+.tabs-checked input:nth-of-type(2):checked ~ .tab:nth-of-type(2),
+.tabs-checked input:nth-of-type(3):checked ~ .tab:nth-of-type(3)
+{
+  display: block;
+}
+
+
+.tab-radio {
+    display: none;
+}
+
+.tab-link {
+    color: #d33;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+/* endChecked Tabs */
+
+/* capture */
+.img-capture {
+    width: 700px;
+    height: 200px;
+}
+
+/* end capture */

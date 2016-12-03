@@ -4,7 +4,64 @@
     <link rel="stylesheet" href="popup.css">
   </head>
   <body>
-    <button id="switch">改變視角吧</button>
+    <div class="tab-area tabs-checked">
+      <nav>
+        <label class="tab-link" for="tab-A">Home</label>
+        <label class="tab-link" for="tab-B">List</label>
+        <label class="tab-link" for="tab-C"  id="capture">Share</label>
+      </nav>
+      <input class="tab-radio" checked type="radio" name="tab" id="tab-A" />
+      <input class="tab-radio" type="radio" name="tab" id="tab-B" />
+      <input class="tab-radio" type="radio" name="tab" id="tab-C" />
+      <article class="tab">
+        <div class="wrap home">
+          <div class="setting">
+            <label class="label">主題：</label>
+            <select  class="theme" name="theme">
+              <option>性別</option>
+            </select>
+          </div>
+          <div class="setting">
+            <label class="label">模式：</label>
+            <select  class="mode" name="mode">
+              <option>中性詞</option>
+              <option disabled>反義詞</option>
+            </select>
+          </div>
+          <button id="switch" class="big">改變視角吧</button>
+        </div>
+      </article>
+      <article class="tab">
+        <div class="wrap list">
+          <div class="block create-block">
+            <input type="text" class="create-item small item-base" name="origin" placeholder="base">
+            <span>to</span>
+            <input type="text" class="create-item small item-compare" name="changed" placeholder="compare">
+            <button>+</button>
+          </div>
+          <div class="block label-block">
+            <div class="label-item">
+              <label class="small light-gray">媽媽</label>
+              <span>to</span>
+              <label class="small pink">雙親</label>
+            </div>
+            <div class="label-item">
+              <label class="small light-gray">爸爸</label>
+              <span>to</span>
+              <label class="small pink">雙親</label>
+            </div>
+          </div>
+        </div>
+      </article>
+      <article class="tab">
+        <div class="wrap share">
+          <div>
+            <img id="captureImage" class="img-capture" src=""/>
+          </div>
+          <button class="big">馬上分享 facebook</button>
+        </div>
+      </article>
+    </div>
   </body>
   <script src="utilities.js" type="text/javascript"></script>
   <script type="text/javascript" src="popup.js"></script>
