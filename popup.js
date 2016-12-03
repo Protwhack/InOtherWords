@@ -66,10 +66,6 @@ function clickSwitch() {
   var action, valueToSet;
   var switchValue = switchElement.innerHTML;
 
-  if (cropper !== undefined) {
-    cropper.destroy();
-  }
-
   if(switchValue.indexOf("返回原文") != -1) {
     switchElement.innerHTML = "處理中...";
     action = "switchOff";
@@ -93,6 +89,10 @@ function clickSwitch() {
 
 
 function clickCapture() {
+
+  if (cropper !== undefined)
+    cropper.destroy();
+
   sendMessageToInject("addStrikeThrough", function(status) {
     if(status === SUCCESS) {
       chrome.tabs.captureVisibleTab(null,{"format":"png"},function(dataUrl){
