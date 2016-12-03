@@ -50,8 +50,8 @@ function resetContent(originContent, cb) {
   });
 }
 
-function addStrikeThrough(originContent, cb) {
-  sendMessageToBackground("afterClickCapture", originContent, function(response) {
+function afterClickCapture(action, originContent, cb) {
+  sendMessageToBackground(action, originContent, function(response) {
     var status = response.status;
 
     if(status === SUCCESS) {
@@ -113,10 +113,18 @@ function setMessageListeners() {
 
       case "addStrikeThrough":
         var originContent = getCurrentTabContent();
-        addStrikeThrough(originContent, function() {
+        afterClickCapture(action, originContent, function() {
           sendResponse(SUCCESS);
         });
         return true;
+
+      case "removeStrikeThrough":
+        var originContent = getCurrentTabContent();
+        afterClickCapture(action, originContent, function() {
+          sendResponse(SUCCESS);
+        });
+        return true;
+
 
       case "isCurrentTabEnable":
         sendResponse(enable);

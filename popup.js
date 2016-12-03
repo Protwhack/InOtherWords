@@ -101,6 +101,9 @@ function clickCapture() {
         cropper = new Cropper(image);
       });
     }
+    sendMessageToInject("removeStrikeThrough", function(status) {
+
+    });
   });
 
 
