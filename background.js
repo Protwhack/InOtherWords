@@ -39,18 +39,11 @@ function changeContentToMappingData(originContent, cb) {
 
 
 function resetContent(originContent, cb) {
-
   var newContent = originContent;
-  
-  // TODO reset content
-  // var regex;
-  // regex = new RegExp("<span class='emphasize'>.+</span><span class='hidden'>.+</span>", "g");
-  // newContent = newContent.replace(regex, function(str) {
-  //   var result = str.slice(str.indexOf("hidden") + 7, str.lastIndexOf("</span>"));
-  //   console.log("result", result);
-  //   return result;
-  // });
+  var regex;
 
+  regex = new RegExp(/<span class="emphasize">([-'a-z\u4e00-\u9eff]{1,50})<\/span><span class="hidden">([-'a-z\u4e00-\u9eff]{1,50})<\/span>/, "g");
+  newContent = newContent.replace(regex,"$2");
   cb({status: SUCCESS, newContent: newContent});
 }
 
