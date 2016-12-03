@@ -143,7 +143,6 @@ select {
     position: absolute;
     top: 9px;
     right: 9px;
-    display: block;
 }
 
 .label-item label.light-gray:after {
