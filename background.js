@@ -53,6 +53,33 @@ var mappingData = {
 
 
 
+function sendMessageToInject(action, data, callback) {
+  console.log("sendMessageToInject");
+
+  if(isFunction(data)) {
+    callback = data;
+    data = undefined;
+  }
+
+  var message = {
+    action: action,
+    data: data
+  };
+
+  chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+    var activeTab = tabs[0];
+    if(activeTab) {
+      var argumentsToSend = [activeTab.id, message];
+      if(callback) {
+        argumentsToSend.push(callback);
+      }
+      chrome.tabs.sendMessage.apply(this, argumentsToSend);
+    }
+  });
+}
+
+
+
 function changeContentToMappingData(originContent, cb) {
 
   var newContent = originContent;
@@ -86,16 +113,31 @@ function setMessageListener() {
     action = message.action;
 
     switch(action) {
+
       case "inOtherWords":
         var originContent = message.data;
         changeContentToMappingData(originContent, sendResponse);
-        break;
+        return true;
+
       case "inOriginalWords":
         var originContent = message.data;
         resetContent(originContent, sendResponse);
+        return true;
+
+      case "shareToFacebook":
+        sendMessageToInject("fb.browser_action.click", message.data);
+        // chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+        //   if(tabs[0]) {
+        //     var activeTab = tabs[0];
+        //     var contentInfo = {
+        //       action: 'fb.browser_action.click',
+        //       data: activeTab.url
+        //     };
+        //     chrome.tabs.sendMessage(activeTab.id, contentInfo);
+        //   }
+        // });
         break;
     }
-    return true;
   });
 }
 

@@ -2,10 +2,11 @@
 //   action: ""
 //   data: xxx
 // }
+// mappingData[theme][mode]
 
 const SUCCESS = 200, FAILURE = 500;
 
-var switchElement;
+var shareElement;
 
 
 
@@ -85,8 +86,15 @@ function clickSwitch() {
 
 
 
+function clickShare() {
+  sendMessageToBackground("shareToFacebook", "https://shopping.friday.tw");
+}
+
+
+
 (function () {
   switchElement = document.getElementById("switch");
+  shareElement = document.getElementById("share");
   sendMessageToInject("isCurrentTabEnable", function(enable) {
     if(enable === undefined) {
       enable = "改變視角吧";
@@ -94,7 +102,9 @@ function clickSwitch() {
     switchElement.innerHTML = enable;
     switchElement.addEventListener("click", clickSwitch);
   });
-}) ()
+  shareElement.addEventListener("click", clickShare);
+})()
+
 
 
 

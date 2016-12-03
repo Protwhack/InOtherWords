@@ -7,6 +7,7 @@
 const SUCCESS = 200, FAILURE = 500;
 // const THEME_GENDER = 0;
 // const MODE_NEUTER = 0, MODE_ANTONYM = 1;
+const APP_ID = Config.FACEBOOK_APP_ID;
 
 var enable;
 // var themeSelected = , mode = ;
@@ -100,8 +101,30 @@ function setMessageListeners() {
       case "isCurrentTabEnable":
         sendResponse(enable);
         break;
+
+      case "fb.browser_action.click":
+        showDialog(
+          window.getSelection().toString(),
+          message.data
+        );
+        break;
     }
   });
+}
+
+
+
+function showDialog(quote, currentURL) {
+  var shareDialogURL = 'https://www.facebook.com/sharer/sharer.php?';
+  shareDialogURL = shareDialogURL.concat('app_id=', APP_ID);
+  shareDialogURL = shareDialogURL.concat('&u=', currentURL);
+  if (quote) {
+    shareDialogURL = shareDialogURL.concat('&quote=', quote);
+  }
+
+  var windowSpecs = 'toolbar=no, location=no, status=no, menubar=no,' +
+                    'scrollbars=yes, resizable=yes, width=600, height=400';
+  window.open(shareDialogURL, 'fbShareWindow', windowSpecs);
 }
 
 
@@ -110,3 +133,5 @@ function setMessageListeners() {
   enable = "改變視角吧";
   setMessageListeners();
 })()
+
+
