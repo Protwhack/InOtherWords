@@ -93,11 +93,16 @@ function clickSwitch() {
 
 
 function clickCapture() {
-  chrome.tabs.captureVisibleTab(null,{"format":"png"},function(dataUrl){
-    var image = document.getElementById("captureImage");
-    image.setAttribute( "src", dataUrl );
-    cropper = new Cropper(image);
+  sendMessageToInject("addStrikeThrough", function(status) {
+    if(status === SUCCESS) {
+      chrome.tabs.captureVisibleTab(null,{"format":"png"},function(dataUrl){
+        var image = document.getElementById("captureImage");
+        image.setAttribute( "src", dataUrl );
+        cropper = new Cropper(image);
+      });
+    }
   });
+
 
 }
 

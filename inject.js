@@ -50,6 +50,19 @@ function resetContent(originContent, cb) {
   });
 }
 
+function addStrikeThrough(originContent, cb) {
+  sendMessageToBackground("afterClickCapture", originContent, function(response) {
+    var status = response.status;
+
+    if(status === SUCCESS) {
+      var newContent = response.newContent;
+      document.body.outerHTML = newContent;
+      setTimeout(function(){ cb(SUCCESS); }, 1000);
+    } else {
+      cb(FAILURE);
+    }
+  });
+}
 
 
 function sendMessageToBackground(action, data, callback) {
@@ -94,6 +107,13 @@ function setMessageListeners() {
         var originContent = getCurrentTabContent();
         resetContent(originContent, function() {
           enable = "改變視角吧";
+          sendResponse(SUCCESS);
+        });
+        return true;
+
+      case "addStrikeThrough":
+        var originContent = getCurrentTabContent();
+        addStrikeThrough(originContent, function() {
           sendResponse(SUCCESS);
         });
         return true;
