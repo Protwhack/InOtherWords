@@ -1,3 +1,7 @@
+body {
+    margin: 0;
+}
+
 .light-gray {
     background-color: #eee;
 }
@@ -36,6 +40,8 @@
     width: 60px;
     display: inline-block;
     position: absolute;
+    height: 100%;
+    background: #eee;
 }
 
 .popup {
@@ -65,11 +71,12 @@ button:active {
 }
 
 select {
-    width: 55%;
+    width: 75%;
 }
 
 .setting {
     display: block;
+    margin-top: 0.5em;
 }
 
 #switch {
@@ -111,7 +118,6 @@ select {
     margin-top: 0.5em;
 }
 
-
 /* Checked Tabs */
 
 .tab{
@@ -120,9 +126,8 @@ select {
     box-sizing: border-box;
     left: 60px;
     position: relative;
-    width: 270px;
+    width: 280px;
     height: 180px;
-    padding-top: 0;
 }
 
 .tab-share {
