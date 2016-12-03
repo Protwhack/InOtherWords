@@ -32,10 +32,10 @@
         "http://*/*"
       ],
       "js": [
-        "utilities.js", "cropper.min.js", "inject.js"
+        "utilities.js", "inject.js"
       ],
       "css": [
-        "inject.css", "cropper.min.css"
+        "inject.css"
       ],
       "run_at": "document_end"
     }
