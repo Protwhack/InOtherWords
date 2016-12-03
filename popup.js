@@ -93,40 +93,24 @@ function clickSwitch() {
 
 
 function clickCapture() {
-    // chrome.windows.getCurrent(function (win) {
-    //   chrome.tabs.captureVisibleTab(win.id,{"format":"png"}, function(imgUrl) {
-    //     alert(imgUrl);
-    //   });
-    // });
-    chrome.tabs.captureVisibleTab(null,{"format":"png"},function(dataUrl){
-        // alert(dataUrl);
-        var image = document.getElementById("captureImage");
-        image.setAttribute( "src", dataUrl );
-        cropper = new Cropper(image, {
-            crop: function(e) {
-                // console.log(e.detail.x);
-                // console.log(e.detail.y);
-                // console.log(e.detail.width);
-                // console.log(e.detail.height);
-                // console.log(e.detail.rotate);
-                // console.log(e.detail.scaleX);
-                // console.log(e.detail.scaleY);
-            }
-        });
-    });
+  chrome.tabs.captureVisibleTab(null,{"format":"png"},function(dataUrl){
+    var image = document.getElementById("captureImage");
+    image.setAttribute( "src", dataUrl );
+    cropper = new Cropper(image);
+  });
 
 }
 
 
 
 function clickUpload() {
-    cropper.disable();
-    var dataURL = cropper.getCroppedCanvas().toDataURL();
-    var image = document.getElementById("captureImage");
-    image.setAttribute( "src", dataURL );
-    cropper.destroy();
-    // TODO:
-    sendMessageToBackground("shareToFacebook", dataURL);
+  cropper.disable();
+  var dataURL = cropper.getCroppedCanvas().toDataURL();
+  var image = document.getElementById("captureImage");
+  image.setAttribute( "src", dataURL );
+  cropper.destroy();
+  // TODO:
+  sendMessageToBackground("shareToFacebook", dataURL);
 }
 
 
