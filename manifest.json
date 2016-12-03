@@ -10,7 +10,7 @@
   },
   "background": {
     "scripts": [
-      "background.js"
+      "utilities.js", "background.js"
     ],
     "persistent": true
   },
@@ -32,7 +32,7 @@
         "http://*/*"
       ],
       "js": [
-        "utilities.js", "inject.js"
+        "config.js", "utilities.js", "inject.js"
       ],
       "css": [
         "inject.css"

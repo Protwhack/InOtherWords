@@ -2,6 +2,7 @@
 //   action: ""
 //   data: xxx
 // }
+// mappingData[theme][mode]
 
 const SUCCESS = 200, FAILURE = 500;
 
@@ -26,8 +27,36 @@ function sendMessageToInject(action, data, callback) {
   };
 
   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-    chrome.tabs.sendMessage(tabs[0].id, message, callback);
+    var activeTab = tabs[0];
+    if(activeTab) {
+      var argumentsToSend = [activeTab.id, message];
+      if(callback) {
+        argumentsToSend.push(callback);
+      }
+      chrome.tabs.sendMessage.apply(this, argumentsToSend);
+    }
   });
+}
+
+
+
+function sendMessageToBackground(action, data, callback) {
+  if(isFunction(data)) {
+    callback = data;
+    data = undefined;
+  }
+
+  var message = {
+    action: action,
+    data: data
+  };
+
+  var argumentsToSend = [message];
+  if(callback) {
+    argumentsToSend.push(callback);
+  }
+
+  chrome.runtime.sendMessage.apply(this, argumentsToSend);
 }
 
 
@@ -88,13 +117,19 @@ function clickCapture() {
 
 }
 
+
+
 function clickUpload() {
     cropper.disable();
     var dataURL = cropper.getCroppedCanvas().toDataURL();
     var image = document.getElementById("captureImage");
     image.setAttribute( "src", dataURL );
     cropper.destroy();
+    // TODO:
+    sendMessageToBackground("shareToFacebook", dataURL);
 }
+
+
 
 (function () {
   switchElement = document.getElementById("switch");
@@ -102,6 +137,7 @@ function clickUpload() {
   uploadElement = document.getElementById("upload");
   captureElement.addEventListener("click", clickCapture);
   uploadElement.addEventListener("click", clickUpload);
+
   sendMessageToInject("isCurrentTabEnable", function(enable) {
     if(enable === undefined) {
       enable = "改變視角吧";
@@ -109,7 +145,8 @@ function clickUpload() {
     switchElement.innerHTML = enable;
     switchElement.addEventListener("click", clickSwitch);
   });
-}) ()
+})()
+
 
 
 
