@@ -34,6 +34,8 @@ body {
 .small {
     width: 30%;
     display: inline-block;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
 }
 
 .nav-bar {
@@ -81,6 +83,8 @@ select {
 
 #switch {
     height: auto;
+    position: relative;
+    top: 80px;
 }
 
 .label {
@@ -99,6 +103,7 @@ select {
 
 .create-block {
     border-bottom: 1px dashed #ececf4;
+    padding-bottom: 0.5em;
 }
 
 .block span {
@@ -116,6 +121,37 @@ select {
 .label-item label {
     text-align: center;
     margin-top: 0.5em;
+    position: relative;
+}
+
+.label-item label:after {
+    content: "";
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 6px 0 6px 10px;
+    position: relative;
+    top: 0px;
+    right: -14px;
+}
+
+.label-item label div {
+    width: 6px;
+    height: 6px;
+    border-radius: 3px;
+    background-color: #fff;
+    position: absolute;
+    top: 9px;
+    right: 9px;
+    display: block;
+}
+
+.label-item label.light-gray:after {
+    border-color: #fff #fff #fff #eee;
+}
+
+.label-item label.pink:after {
+    border-color: #fff #fff #fff pink;
 }
 
 /* Checked Tabs */
