@@ -103,7 +103,19 @@ function resetContent(originContent, cb) {
   cb({status: SUCCESS, newContent: newContent});
 }
 
+function addStrikeThrough(originContent, cb) {
+  var newContent = originContent;
+  var regex = new RegExp(/(<span class="emphasize">[-'a-z\u4e00-\u9eff]{1,50}<\/span><span class=)"hidden"(>[-'a-z\u4e00-\u9eff]{1,50}<\/span>)/, "g");
+  newContent = newContent.replace(regex, "$1strike-through$2");
+  cb({status: SUCCESS, newContent: newContent});
+}
 
+function removeStrikeThrough(originContent, cb) {
+  var newContent = originContent;
+  var regex = new RegExp(/(<span class="emphasize">[-'a-z\u4e00-\u9eff]{1,50}<\/span><span class=)"strike-through"(>[-'a-z\u4e00-\u9eff]{1,50}<\/span>)/, "g");
+  newContent = newContent.replace(regex, "$1hidden$2");
+  cb({status: SUCCESS, newContent: newContent});
+}
 
 function setMessageListener() {
   console.log("setMessageListener");
@@ -122,6 +134,16 @@ function setMessageListener() {
       case "inOriginalWords":
         var originContent = message.data;
         resetContent(originContent, sendResponse);
+        return true;
+
+      case "addStrikeThrough":
+        var originContent = message.data;
+        addStrikeThrough(originContent, sendResponse);
+        return true;
+
+      case "removeStrikeThrough":
+        var originContent = message.data;
+        removeStrikeThrough(originContent, sendResponse);
         return true;
 
       case "shareToFacebook":
