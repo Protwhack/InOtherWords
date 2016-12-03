@@ -66,10 +66,6 @@ function clickSwitch() {
   var action, valueToSet;
   var switchValue = switchElement.innerHTML;
 
-  if (cropper !== undefined) {
-    cropper.destroy();
-  }
-
   if(switchValue.indexOf("返回原文") != -1) {
     switchElement.innerHTML = "處理中...";
     action = "switchOff";
@@ -93,40 +89,36 @@ function clickSwitch() {
 
 
 function clickCapture() {
-    // chrome.windows.getCurrent(function (win) {
-    //   chrome.tabs.captureVisibleTab(win.id,{"format":"png"}, function(imgUrl) {
-    //     alert(imgUrl);
-    //   });
-    // });
-    chrome.tabs.captureVisibleTab(null,{"format":"png"},function(dataUrl){
-        // alert(dataUrl);
+
+  if (cropper !== undefined)
+    cropper.destroy();
+
+  sendMessageToInject("addStrikeThrough", function(status) {
+    if(status === SUCCESS) {
+      chrome.tabs.captureVisibleTab(null,{"format":"png"},function(dataUrl){
         var image = document.getElementById("captureImage");
         image.setAttribute( "src", dataUrl );
-        cropper = new Cropper(image, {
-            crop: function(e) {
-                // console.log(e.detail.x);
-                // console.log(e.detail.y);
-                // console.log(e.detail.width);
-                // console.log(e.detail.height);
-                // console.log(e.detail.rotate);
-                // console.log(e.detail.scaleX);
-                // console.log(e.detail.scaleY);
-            }
-        });
+        cropper = new Cropper(image);
+      });
+    }
+    sendMessageToInject("removeStrikeThrough", function(status) {
+
     });
+  });
+
 
 }
 
 
 
 function clickUpload() {
-    cropper.disable();
-    var dataURL = cropper.getCroppedCanvas().toDataURL();
-    var image = document.getElementById("captureImage");
-    image.setAttribute( "src", dataURL );
-    cropper.destroy();
-    // TODO:
-    sendMessageToBackground("shareToFacebook", dataURL);
+  cropper.disable();
+  var dataURL = cropper.getCroppedCanvas().toDataURL();
+  var image = document.getElementById("captureImage");
+  image.setAttribute( "src", dataURL );
+  cropper.destroy();
+  // TODO:
+  sendMessageToBackground("shareToFacebook", dataURL);
 }
 
 
