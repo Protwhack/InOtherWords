@@ -62,7 +62,12 @@ function sendMessageToBackground(action, data, callback) {
     data: data
   };
 
-  chrome.runtime.sendMessage(message, callback);
+  var argumentsToSend = [message];
+  if(callback) {
+    argumentsToSend.push(callback);
+  }
+
+  chrome.runtime.sendMessage.apply(this, argumentsToSend);
 }
 
 
@@ -70,6 +75,7 @@ function sendMessageToBackground(action, data, callback) {
 function setMessageListeners() {
   console.log("setMessageListeners");
   var action;
+
   chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
     action = message.action;
 

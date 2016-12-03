@@ -23,8 +23,36 @@ function sendMessageToInject(action, data, callback) {
   };
 
   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-    chrome.tabs.sendMessage(tabs[0].id, message, callback);
+    var activeTab = tabs[0];
+    if(activeTab) {
+      var argumentsToSend = [activeTab.id, message];
+      if(callback) {
+        argumentsToSend.push(callback);
+      }
+      chrome.tabs.sendMessage.apply(this, argumentsToSend);
+    }
   });
+}
+
+
+
+function sendMessageToBackground(action, data, callback) {
+  if(isFunction(data)) {
+    callback = data;
+    data = undefined;
+  }
+
+  var message = {
+    action: action,
+    data: data
+  };
+
+  var argumentsToSend = [message];
+  if(callback) {
+    argumentsToSend.push(callback);
+  }
+
+  chrome.runtime.sendMessage.apply(this, argumentsToSend);
 }
 
 

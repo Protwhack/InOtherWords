@@ -3,9 +3,10 @@
 //   action: ""
 //   data: xxx
 // }
+// mappingData[theme][mode]
+
 const SUCCESS = 200, FAILURE = 500;
 
-// TODO finish mapping data
 var mappingData = {
   gender: {
     neuter: {
@@ -61,7 +62,6 @@ function changeContentToMappingData(originContent, cb) {
   for(var key in keyValues) {
     regex = new RegExp(key, "g");
     newContent = newContent.replace(regex, "<span class='emphasize'>" + keyValues[key] + "</span><span class='hidden'>" + key + "</span>");
-    // <span class='strike-through' style='text-decoration:line-through;'>
   };
 
   cb({status: SUCCESS, newContent: newContent});
@@ -71,10 +71,8 @@ function changeContentToMappingData(originContent, cb) {
 
 function resetContent(originContent, cb) {
   var newContent = originContent;
-  var regex;
-
-  regex = new RegExp(/<span class="emphasize">([-'a-z\u4e00-\u9eff]{1,50})<\/span><span class="hidden">([-'a-z\u4e00-\u9eff]{1,50})<\/span>/, "g");
-  newContent = newContent.replace(regex,"$2");
+  var regex = new RegExp(/<span class="emphasize">([-'a-z\u4e00-\u9eff]{1,50})<\/span><span class="hidden">([-'a-z\u4e00-\u9eff]{1,50})<\/span>/, "g");
+  newContent = newContent.replace(regex, "$2");
   cb({status: SUCCESS, newContent: newContent});
 }
 
@@ -106,5 +104,4 @@ function setMessageListener() {
 (function init() {
   setMessageListener();
 })()
-
 
