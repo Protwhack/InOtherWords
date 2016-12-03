@@ -161,7 +161,9 @@ select {
 /* capture */
 .img-capture {
     width: 700px;
-    height: 200px;
+    height: 470px;
+    max-width: 1400px;
+    height: 500px;
 }
 
 /* end capture */
