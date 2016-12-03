@@ -78,15 +78,15 @@ function setMessageListeners() {
       case "switchOn":
         var originContent = getCurrentTabContent();
         changeContent(originContent, function() {
-          enable = true;
+          enable = "返回原文";
           sendResponse(SUCCESS);
         });
         return true;
-      
+
       case "switchOff":
         var originContent = getCurrentTabContent();
         resetContent(originContent, function() {
-          enable = false;
+          enable = "改變視角吧";
           sendResponse(SUCCESS);
         });
         return true;
@@ -101,6 +101,6 @@ function setMessageListeners() {
 
 
 (function init() {
-  enable = false;
+  enable = "改變視角吧";
   setMessageListeners();
 })()
