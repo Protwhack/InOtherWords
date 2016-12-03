@@ -34,14 +34,14 @@ function clickSwitch() {
   var action, valueToSet;
   var switchValue = switchElement.innerHTML;
 
-  if(switchValue.indexOf("true") != -1) {
-    switchElement.innerHTML = "Processing...";
+  if(switchValue.indexOf("返回原文") != -1) {
+    switchElement.innerHTML = "處理中...";
     action = "switchOff";
-    valueToSet = false;
-  } else if(switchValue.indexOf("false") != 1) {
-    switchElement.innerHTML = "Processing...";
+    valueToSet = "改變視角吧";
+  } else if(switchValue.indexOf("改變視角吧") != 1) {
+    switchElement.innerHTML = "處理中...";
     action = "switchOn";
-    valueToSet = true;
+    valueToSet = '返回原文';
   } else {
     return;
   }
@@ -61,7 +61,7 @@ function clickSwitch() {
   switchElement = document.getElementById("switch");
   sendMessageToInject("isCurrentTabEnable", function(enable) {
     if(enable === undefined) {
-      enable = false;
+      enable = "改變視角吧";
     }
     switchElement.innerHTML = enable;
     switchElement.addEventListener("click", clickSwitch);
