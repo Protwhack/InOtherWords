@@ -32,6 +32,12 @@
     display: inline-block;
 }
 
+.nav-bar {
+    width: 60px;
+    display: inline-block;
+    position: absolute;
+}
+
 .popup {
     width: 200px;
     height: auto;
@@ -102,6 +108,7 @@ select {
 
 .label-item label {
     text-align: center;
+    margin-top: 0.5em;
 }
 
 
@@ -111,6 +118,15 @@ select {
     display:none;
     padding: 10px;
     box-sizing: border-box;
+    left: 60px;
+    position: relative;
+    width: 270px;
+    height: 180px;
+    padding-top: 0;
+}
+
+.tab-share {
+    width: 770px;
 }
 
 
@@ -127,9 +143,17 @@ select {
 }
 
 .tab-link {
-    color: #d33;
-    text-decoration: underline;
+    color: navy;
     cursor: pointer;
+    height: 5em;
+    background-color: #eee;
+    text-align: center;
+    line-height: 5em;
+    display: block;
+}
+
+.tab-link:hover {
+    background-color: rgba(200, 200, 200, 1);
 }
 
 /* endChecked Tabs */
@@ -141,3 +165,8 @@ select {
 }
 
 /* end capture */
+
+.clearfix {
+  overflow: auto;
+  zoom: 1;
+}
