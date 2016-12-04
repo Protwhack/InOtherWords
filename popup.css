@@ -153,6 +153,19 @@ select {
     border-color: #fff #fff #fff pink;
 }
 
+.tab-link {
+    box-sizing: border-box;
+}
+.tab-link.active {
+    background-color: #999;
+}
+
+.tab-link img {
+    width: 32px;
+    height: 32px;
+    margin-top: 13px;
+}
+
 /* Checked Tabs */
 
 .tab{
@@ -204,6 +217,11 @@ select {
     height: 470px;
     max-width: 1400px;
     height: 500px;
+}
+
+.icon-plus {
+    width: 30px;
+    margin-left: 5px;
 }
 
 /* end capture */
