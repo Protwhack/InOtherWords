@@ -147,17 +147,17 @@ function setMessageListener() {
         return true;
 
       case "shareToFacebook":
-        sendMessageToInject("fb.browser_action.click", message.data);
-        // chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-        //   if(tabs[0]) {
-        //     var activeTab = tabs[0];
-        //     var contentInfo = {
-        //       action: 'fb.browser_action.click',
-        //       data: activeTab.url
-        //     };
-        //     chrome.tabs.sendMessage(activeTab.id, contentInfo);
-        //   }
-        // });
+        // sendMessageToInject("fb.browser_action.click", message.data);
+        chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+          if(tabs[0]) {
+            var activeTab = tabs[0];
+            var contentInfo = {
+              action: 'fb.browser_action.click',
+              data: activeTab.url
+            };
+            chrome.tabs.sendMessage(activeTab.id, contentInfo);
+          }
+        });
         break;
     }
   });

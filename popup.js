@@ -137,6 +137,7 @@ function clickUpload() {
   cropper.destroy();
   // TODO:
   sendMessageToBackground("shareToFacebook", dataURL);
+  window.close();
 }
 
 
