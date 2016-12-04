@@ -88,7 +88,7 @@ function changeContentToMappingData(originContent, cb) {
 
   for(var key in keyValues) {
     regex = new RegExp(key, "g");
-    newContent = newContent.replace(regex, "<span class='emphasize'>" + keyValues[key] + "</span><span class='hidden'>" + key + "</span>");
+    newContent = newContent.replace(regex, "<span class='emphasize'>" + keyValues[key] + "</span><span class='strike-through'>" + key + "</span>");
   };
 
   cb({status: SUCCESS, newContent: newContent});
@@ -98,7 +98,7 @@ function changeContentToMappingData(originContent, cb) {
 
 function resetContent(originContent, cb) {
   var newContent = originContent;
-  var regex = new RegExp(/<span class="emphasize">([-'a-z\u4e00-\u9eff]{1,50})<\/span><span class="hidden">([-'a-z\u4e00-\u9eff]{1,50})<\/span>/, "g");
+  var regex = new RegExp(/<span class="emphasize">([-'a-z\u4e00-\u9eff]{1,50})<\/span><span class="strike-through">([-'a-z\u4e00-\u9eff]{1,50})<\/span>/, "g");
   newContent = newContent.replace(regex, "$2");
   cb({status: SUCCESS, newContent: newContent});
 }
