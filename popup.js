@@ -111,22 +111,19 @@ function clickSwitch() {
 
 function clickCapture() {
 
+  // sendMessageToInject("addStrikeThrough", function(status) {
+  //   sendMessageToInject("removeStrikeThrough", function(status) {
+  //   });
+  // });
+
   if (cropper !== undefined)
     cropper.destroy();
 
-  sendMessageToInject("addStrikeThrough", function(status) {
-    if(status === SUCCESS) {
-      chrome.tabs.captureVisibleTab(null,{"format":"png"},function(dataUrl){
-        var image = document.getElementById("captureImage");
-        image.setAttribute( "src", dataUrl );
-        cropper = new Cropper(image);
-      });
-    }
-    sendMessageToInject("removeStrikeThrough", function(status) {
-
-    });
+  chrome.tabs.captureVisibleTab(null,{"format":"png"},function(dataUrl){
+    var image = document.getElementById("captureImage");
+    image.setAttribute( "src", dataUrl );
+    cropper = new Cropper(image);
   });
-
 
 }
 
