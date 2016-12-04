@@ -10,6 +10,27 @@ var switchElement;
 var captureElement;
 var uploadElement;
 var cropper;
+var tabLink;
+
+function initTabs() {
+  tabLink = document.getElementsByClassName("tab-link");
+  var active;
+
+  for (var i = 0; i < tabLink.length; i++) {
+    active =  tabLink[i];
+    active.addEventListener('click', function (event) {
+      event.stopPropagation()
+      var currentTab = event.srcElement.parentElement;
+
+      tabLink = document.getElementsByClassName("tab-link");
+      for (var i = 0; i < tabLink.length; i++) {
+        tabLink[i].className = "tab-link";
+      }
+      if(currentTab.className === "tab-link")
+        currentTab.className = "tab-link active";
+    }, false);
+  }
+}
 
 
 
@@ -134,6 +155,8 @@ function clickUpload() {
     switchElement.innerHTML = enable;
     switchElement.addEventListener("click", clickSwitch);
   });
+
+  initTabs();
 })()
 
 
