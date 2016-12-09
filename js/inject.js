@@ -171,7 +171,9 @@ function showDialog(currentURL, quote, hashTag) {
   shareDialogURL = shareDialogURL.concat("app_id=", APP_ID);
   shareDialogURL = shareDialogURL.concat("&u=", currentURL);
   if(quote) {
-    shareDialogURL = shareDialogURL.concat("&quote=", encodeURIComponent(quote) + "\n" + encodeURIComponent("———《In Other Words》"));
+    shareDialogURL = shareDialogURL.concat("&quote=", encodeURIComponent(quote) + "\n"
+      + encodeURIComponent("———《In Other Words》") + "\n"
+      + encodeURIComponent("https://chrome.google.com/webstore/detail/inotherwords/khgdgbpejkfjacpndbdjoplppailhojc"));
   }
   
   // var picture = currentURL;
