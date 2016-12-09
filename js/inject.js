@@ -52,19 +52,19 @@ function resetContent(originContent, cb) {
   });
 }
 
-function afterClickCapture(action, originContent, cb) {
-  sendMessageToBackground(action, originContent, function(response) {
-    var status = response.status;
+// function afterClickCapture(action, originContent, cb) {
+//   sendMessageToBackground(action, originContent, function(response) {
+//     var status = response.status;
 
-    if(status === SUCCESS) {
-      var newContent = response.newContent;
-      document.body.outerHTML = newContent;
-      setTimeout(function(){ cb(SUCCESS); }, 1000);
-    } else {
-      cb(FAILURE);
-    }
-  });
-}
+//     if(status === SUCCESS) {
+//       var newContent = response.newContent;
+//       document.body.outerHTML = newContent;
+//       setTimeout(function(){ cb(SUCCESS); }, 1000);
+//     } else {
+//       cb(FAILURE);
+//     }
+//   });
+// }
 
 
 function sendMessageToBackground(action, data, callback) {
@@ -116,23 +116,27 @@ function setMessageListeners() {
         });
         return true;
 
-      case "addStrikeThrough":
-        var originContent = getCurrentTabContent();
-        afterClickCapture(action, originContent, function() {
-          sendResponse(SUCCESS);
+      // case "addStrikeThrough":
+      //   var originContent = getCurrentTabContent();
+      //   afterClickCapture(action, originContent, function() {
+      //     sendResponse(SUCCESS);
+      //   });
+      //   return true;
+
+      // case "removeStrikeThrough":
+      //   var originContent = getCurrentTabContent();
+      //   afterClickCapture(action, originContent, function() {
+      //     sendResponse(SUCCESS);
+      //   });
+      //   return true;
+
+
+      case "getCurrentTabStatus":
+        sendResponse({
+          enable: enable,
+          theme: themeSelected,
+          mode: modeSelected
         });
-        return true;
-
-      case "removeStrikeThrough":
-        var originContent = getCurrentTabContent();
-        afterClickCapture(action, originContent, function() {
-          sendResponse(SUCCESS);
-        });
-        return true;
-
-
-      case "isCurrentTabEnable":
-        sendResponse(enable);
         break;
 
       case "fb.browser_action.click":

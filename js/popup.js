@@ -17,11 +17,13 @@ var themeElement, modeElement;
 
 
 function initTabs() {
-  tabLink = document.getElementsByClassName("tab-link");
   var active;
 
+  tabLink = document.getElementsByClassName("tab-link");
+  tabLink[0].className = "tab-link active";
+
   for (var i = 0; i < tabLink.length; i++) {
-    active =  tabLink[i];
+    active = tabLink[i];
     active.addEventListener('click', function (event) {
       event.stopPropagation()
       var currentTab = event.srcElement.parentElement;
