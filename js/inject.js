@@ -10,8 +10,7 @@ const SUCCESS = 200, FAILURE = 500;
 const APP_ID = Config.FACEBOOK_APP_ID;
 const QUOTES = Config.QUOTES;
 
-var enable;
-// var themeSelected = , mode = ;
+var enable, themeSelected, modeSelected;
 
 
 
@@ -21,8 +20,10 @@ function getCurrentTabContent(cb) {
 
 
 
-function changeContent(originContent, cb) {
-  sendMessageToBackground("inOtherWords", originContent, function(response) {
+function changeContent(themeModeData, originContent, cb) {
+  var data = themeModeData;
+  data.originContent = originContent;
+  sendMessageToBackground("inOtherWords", data, function(response) {
     var status = response.status;
 
     if(status === SUCCESS) {
@@ -89,7 +90,7 @@ function sendMessageToBackground(action, data, callback) {
 
 function setMessageListeners() {
   console.log("setMessageListeners");
-  var action;
+  var action, data, originContent;
 
   chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
     action = message.action;
@@ -97,15 +98,18 @@ function setMessageListeners() {
     switch(action) {
 
       case "switchOn":
-        var originContent = getCurrentTabContent();
-        changeContent(originContent, function() {
+        originContent = getCurrentTabContent();
+        data = message.data;
+        themeSelected = data.theme;
+        modeSelected = data.mode;
+        changeContent(data, originContent, function() {
           enable = "返回原文";
           sendResponse(SUCCESS);
         });
         return true;
 
       case "switchOff":
-        var originContent = getCurrentTabContent();
+        originContent = getCurrentTabContent();
         resetContent(originContent, function() {
           enable = "改變視角吧";
           sendResponse(SUCCESS);

@@ -14,24 +14,23 @@
       <input class="tab-radio" checked type="radio" name="tab" id="tab-A" />
       <input class="tab-radio" type="radio" name="tab" id="tab-B" />
       <input class="tab-radio" type="radio" name="tab" id="tab-C" />
+      <!-- 基本設定 -->
       <article class="tab">
         <div class="wrap home">
           <div class="setting">
             <label class="label">主題：</label>
-            <select  class="theme" name="theme">
-              <option>性別</option>
+            <select class="theme" name="theme">
             </select>
           </div>
           <div class="setting">
             <label class="label">模式：</label>
-            <select  class="mode" name="mode">
-              <option>中性詞</option>
-              <option disabled>反義詞</option>
+            <select class="mode" name="mode">
             </select>
           </div>
           <button id="switch" class="big">改變視角吧</button>
         </div>
       </article>
+      <!-- 增加替換詞彙 -->
       <article class="tab">
         <div class="wrap list">
           <div class="block create-block">
@@ -54,6 +53,7 @@
           </div>
         </div>
       </article>
+      <!-- 分享 -->
       <article class="tab tab-share">
         <div class="wrap share">
           <div>
@@ -64,6 +64,7 @@
       </article>
     </div>
   </body>
+  <script type="text/javascript" src="js/mappingData.js"></script>
   <script type="text/javascript" src="js/utilities.js"></script>
   <script type="text/javascript" src="js/popup.js"></script>
   <script type="text/javascript" src="lib/cropper.min.js"></script>

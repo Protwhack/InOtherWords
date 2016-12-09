@@ -1,6 +1,6 @@
 {
   "name": "InOtherWords",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "manifest_version": 2,
   "description": "InOtherWords Chrome Extension",
   "icons": {
@@ -8,6 +8,11 @@
     "48": "image/POLYYOU-128.png",
     "128": "image/POLYYOU-128.png"
   },
+  "author": [
+    "malikid",
+    "Phoebe Pan",
+    "Allen Tien"
+  ],
   "background": {
     "scripts": [
       "lib/aws-sdk-2.6.10.min.js",

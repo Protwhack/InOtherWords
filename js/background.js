@@ -38,21 +38,22 @@ function sendMessageToInject(action, data, callback) {
 
 
 
-function changeContentToMappingData(originContent, cb) {
+function changeContentToMappingData(data, cb) {
 
-  var newContent = originContent;
-  var keyValues = MappingData["gender"]["neuter"];
-  var regex, keyToBeReplaced, matches;
+  var newContent = data.originContent;
+  var keyValues = MappingData[data.theme][data.mode];
+  var regex, keyToBeReplaced, keyToReplaced, matches;
   var stubStr = "<span class='replaced'></span>";
 
   for(var key in keyValues) {
-    console.log("key", key);
     regex = new RegExp(key + "(?!<span class='replaced)", "g");
     // keyToBeReplaced = key.replace(/.+/g, "$1<span class='replaced'></span>");
     matches = key.match(/.{1}/g);
     keyToBeReplaced = matches.join(stubStr) + stubStr;
+    matches = keyValues[key].match(/.{1}/g);
+    keyToReplaced = matches.join(stubStr) + stubStr;
     newContent = newContent.replace(regex,
-      "<span class='emphasize'>" + keyValues[key] + "</span><span class='strike-through'>" + keyToBeReplaced + "</span>");
+      "<span class='emphasize'>" + keyToReplaced + "</span><span class='strike-through'>" + keyToBeReplaced + "</span>");
   };
 
   cb({status: SUCCESS, newContent: newContent});
@@ -62,7 +63,7 @@ function changeContentToMappingData(originContent, cb) {
 
 function resetContent(originContent, cb) {
   var newContent = originContent;
-  var regex = new RegExp(/<span class="emphasize">([-'a-z\u4e00-\u9eff]+?)<\/span><span class="strike-through">([-'a-z\u4e00-\u9eff(<span class=\"replaced\"><\/span>)]+?)<\/span>/, "g");
+  var regex = new RegExp(/<span class="emphasize">([-'a-z\u4e00-\u9eff(<span class=\"replaced\"><\/span>)]+?)<\/span><span class="strike-through">([-'a-z\u4e00-\u9eff(<span class=\"replaced\"><\/span>)]+?)<\/span>/, "g");
   newContent = newContent.replace(regex, "$2");
   cb({status: SUCCESS, newContent: newContent});
 }
@@ -93,8 +94,8 @@ function setMessageListener() {
     switch(action) {
 
       case "inOtherWords":
-        var originContent = message.data;
-        changeContentToMappingData(originContent, sendResponse);
+        var data = message.data;
+        changeContentToMappingData(data, sendResponse);
         return true;
 
       case "inOriginalWords":
