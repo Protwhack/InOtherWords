@@ -4,26 +4,28 @@
   "manifest_version": 2,
   "description": "InOtherWords Chrome Extension",
   "icons": {
-    "16": "POLYYOU-128.png",
-    "48": "POLYYOU-128.png",
-    "128": "POLYYOU-128.png"
+    "16": "image/POLYYOU-128.png",
+    "48": "image/POLYYOU-128.png",
+    "128": "image/POLYYOU-128.png"
   },
   "background": {
     "scripts": [
-      "utilities.js", "background.js"
+      "lib/aws-sdk-2.6.10.min.js",
+      "js/config.js",
+      "js/mappingData.js",
+      "js/utilities.js",
+      "js/background.js"
     ],
     "persistent": true
   },
   "browser_action": {
-    "default_icon": "POLYYOU-128.png",
+    "default_icon": "image/POLYYOU-128.png",
     "default_title": "InOtherWords",
     "default_popup": "popup.html"
   },
   "permissions": [
     "<all_urls>",
-    "tabs",
-    "https://*/*",
-    "http://*/*"
+    "tabs"
   ],
   "content_scripts": [
     {
@@ -32,10 +34,12 @@
         "http://*/*"
       ],
       "js": [
-        "config.js", "utilities.js", "inject.js"
+        "js/config.js",
+        "js/utilities.js",
+        "js/inject.js"
       ],
       "css": [
-        "inject.css"
+        "css/inject.css"
       ],
       "run_at": "document_end"
     }

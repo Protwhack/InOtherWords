@@ -7,49 +7,7 @@
 
 const SUCCESS = 200, FAILURE = 500;
 
-var mappingData = {
-  gender: {
-    neuter: {
-      "男女雙方": "雙方",
-      "男女": "雙方",
-      "夫妻": "配偶",
-      "爸爸媽媽": "雙親",
-      "媽媽爸爸": "雙親",
-      "父母": "雙親",
-      "媽媽": "雙親",
-      "爸爸": "雙親",
-      "母親": "雙親",
-      "父親": "雙親",
-      "夫妻財產": "婚姻財產",
-      "養父母": "養親",
-      "子婦": "子女之配偶",
-      "女婿": "子女之配偶",
-      "祖父母": "二等親直系血親尊親屬",
-      "養父母": "養親",
-      "妻子": "另一半",
-      "妻(子)": "另一半",
-      "男子漢大丈夫": "人",
-      "大丈夫": "人",
-      "丈夫": "另一半",
-      "夫": "另一半",
-      "太太": "另一半",
-      "老婆": "另一半",
-      "老公": "另一半",
-      "女人": "人",
-      "男人": "人",
-      "女性": "人",
-      "男性": "人",
-      "女孩": "孩童",
-      "男孩": "孩童",
-      "她": "他"
-    },
-    antonym: {
-      "媽媽": "爸爸",
-      "爸爸": "媽媽"
-    }
-  }//,
-  // racist: {},
-};
+var s3;
 
 
 
@@ -83,12 +41,18 @@ function sendMessageToInject(action, data, callback) {
 function changeContentToMappingData(originContent, cb) {
 
   var newContent = originContent;
-  var keyValues = mappingData["gender"]["neuter"];
-  var regex;
+  var keyValues = MappingData["gender"]["neuter"];
+  var regex, keyToBeReplaced, matches;
+  var stubStr = "<span class='replaced'></span>";
 
   for(var key in keyValues) {
-    regex = new RegExp(key, "g");
-    newContent = newContent.replace(regex, "<span class='emphasize'>" + keyValues[key] + "</span><span class='strike-through'>" + key + "</span>");
+    console.log("key", key);
+    regex = new RegExp(key + "(?!<span class='replaced)", "g");
+    // keyToBeReplaced = key.replace(/.+/g, "$1<span class='replaced'></span>");
+    matches = key.match(/.{1}/g);
+    keyToBeReplaced = matches.join(stubStr) + stubStr;
+    newContent = newContent.replace(regex,
+      "<span class='emphasize'>" + keyValues[key] + "</span><span class='strike-through'>" + keyToBeReplaced + "</span>");
   };
 
   cb({status: SUCCESS, newContent: newContent});
@@ -98,24 +62,26 @@ function changeContentToMappingData(originContent, cb) {
 
 function resetContent(originContent, cb) {
   var newContent = originContent;
-  var regex = new RegExp(/<span class="emphasize">([-'a-z\u4e00-\u9eff]{1,50})<\/span><span class="strike-through">([-'a-z\u4e00-\u9eff]{1,50})<\/span>/, "g");
+  var regex = new RegExp(/<span class="emphasize">([-'a-z\u4e00-\u9eff]+?)<\/span><span class="strike-through">([-'a-z\u4e00-\u9eff(<span class=\"replaced\"><\/span>)]+?)<\/span>/, "g");
   newContent = newContent.replace(regex, "$2");
   cb({status: SUCCESS, newContent: newContent});
 }
 
 function addStrikeThrough(originContent, cb) {
   var newContent = originContent;
-  var regex = new RegExp(/(<span class="emphasize">[-'a-z\u4e00-\u9eff]{1,50}<\/span><span class=)"hidden"(>[-'a-z\u4e00-\u9eff]{1,50}<\/span>)/, "g");
+  var regex = new RegExp(/(<span class="emphasize">[-'a-z\u4e00-\u9eff]+?<\/span><span class=)"hidden"(>[-'a-z\u4e00-\u9eff]+?<\/span>)/, "g");
   newContent = newContent.replace(regex, "$1strike-through$2");
   cb({status: SUCCESS, newContent: newContent});
 }
 
 function removeStrikeThrough(originContent, cb) {
   var newContent = originContent;
-  var regex = new RegExp(/(<span class="emphasize">[-'a-z\u4e00-\u9eff]{1,50}<\/span><span class=)"strike-through"(>[-'a-z\u4e00-\u9eff]{1,50}<\/span>)/, "g");
+  var regex = new RegExp(/(<span class="emphasize">[-'a-z\u4e00-\u9eff]+?<\/span><span class=)"strike-through"(>[-'a-z\u4e00-\u9eff]+?<\/span>)/, "g");
   newContent = newContent.replace(regex, "$1hidden$2");
   cb({status: SUCCESS, newContent: newContent});
 }
+
+
 
 function setMessageListener() {
   console.log("setMessageListener");
@@ -147,16 +113,11 @@ function setMessageListener() {
         return true;
 
       case "shareToFacebook":
-        // sendMessageToInject("fb.browser_action.click", message.data);
-        chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-          if(tabs[0]) {
-            var activeTab = tabs[0];
-            var contentInfo = {
-              action: 'fb.browser_action.click',
-              data: activeTab.url
-            };
-            chrome.tabs.sendMessage(activeTab.id, contentInfo);
+        uploadPhotoToS3(message.data, function(error, imageLink) {
+          if(error) {
+            return;
           }
+          sendMessageToInject("fb.browser_action.click", imageLink);
         });
         break;
     }
@@ -165,7 +126,61 @@ function setMessageListener() {
 
 
 
+function getCurrentTab(cb) {
+  chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+    cb(tabs[0]);
+    return;
+  });
+}
+
+function generateFilename(cb) {
+  getCurrentTab(function(activeTab) {
+    if(activeTab) {
+      cb(addTimestamp(activeTab.url));
+    } else {
+      cb(addTimestamp()); 
+    }
+    return;
+  });
+}
+
+function uploadPhotoToS3(imageDataUrl, cb) {
+  var blobData = dataURItoBlob(imageDataUrl);
+
+  generateFilename(function(filename) {
+
+    s3.upload({
+      Key: filename + ".png",
+      Body: blobData,
+      ACL: 'public-read',
+      ContentType: 'image/png'
+    }, function(err, data) {
+
+      if (err) {
+        console.error('There was an error uploading your photo: ', err.message);
+        cb(err);
+        return;
+      }
+
+      console.log('Successfully uploaded photo.');
+      cb(null, data.Location);
+
+    });
+  });
+}
+
+
+
+function initAWS() {
+  // AWS.config.loadFromPath('./MYPATH.json');
+  AWS.config.update(Config.AWS_CREDENTIALS);
+  s3 = new AWS.S3(Config.S3_PARAMS);
+}
+
+
+
 (function init() {
+  initAWS();
   setMessageListener();
 })()
 

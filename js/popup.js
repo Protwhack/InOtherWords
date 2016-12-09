@@ -12,6 +12,8 @@ var uploadElement;
 var cropper;
 var tabLink;
 
+
+
 function initTabs() {
   tabLink = document.getElementsByClassName("tab-link");
   var active;
@@ -109,6 +111,7 @@ function clickSwitch() {
 }
 
 
+
 function clickCapture() {
 
   // sendMessageToInject("addStrikeThrough", function(status) {
@@ -116,12 +119,13 @@ function clickCapture() {
   //   });
   // });
 
-  if (cropper !== undefined)
+  if (cropper !== undefined) {
     cropper.destroy();
+  }
 
-  chrome.tabs.captureVisibleTab(null,{"format":"png"},function(dataUrl){
+  chrome.tabs.captureVisibleTab(null, {"format": "png"}, function(dataUrl) {
     var image = document.getElementById("captureImage");
-    image.setAttribute( "src", dataUrl );
+    image.setAttribute( "src", dataUrl);
     cropper = new Cropper(image);
   });
 
@@ -131,13 +135,12 @@ function clickCapture() {
 
 function clickUpload() {
   cropper.disable();
-  var dataURL = cropper.getCroppedCanvas().toDataURL();
+  var imageDataUrl = cropper.getCroppedCanvas().toDataURL();
   var image = document.getElementById("captureImage");
-  image.setAttribute( "src", dataURL );
+  image.setAttribute("src", imageDataUrl);
   cropper.destroy();
-  // TODO:
-  sendMessageToBackground("shareToFacebook", dataURL);
   window.close();
+  sendMessageToBackground("shareToFacebook", imageDataUrl);
 }
 
 
