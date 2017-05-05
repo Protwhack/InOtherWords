@@ -2,7 +2,7 @@ var Config = (function() {
 
   var self = {};
 
-  self.FACEBOOK_APP_ID = 1159597140762325; // Facebook official: 123561918055313;
+  self.FACEBOOK_APP_ID = 429666130702528; // Development: 1159597140762325; // Facebook official: 123561918055313;
 
   self.AWS_CREDENTIALS = {
     // region: "us-west-2",

@@ -136,11 +136,11 @@ function getCurrentTab(cb) {
 
 function generateFilename(cb) {
   getCurrentTab(function(activeTab) {
-    if(activeTab) {
-      cb(addTimestamp(activeTab.url));
-    } else {
+    // if(activeTab) {
+    //   cb(addTimestamp(activeTab.url));
+    // } else {
       cb(addTimestamp()); 
-    }
+    // }
     return;
   });
 }
